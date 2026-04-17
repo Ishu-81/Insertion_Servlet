@@ -1,0 +1,60 @@
+package ebook581;
+
+
+
+import java.io.*;
+
+import java.util.*;
+
+import com.google.gson.Gson;
+
+
+
+import javax.servlet.*;
+
+import javax.servlet.annotation.WebServlet;
+
+import javax.servlet.http.*;
+
+
+
+@WebServlet("/getEmployees")
+
+public class RetrieveEmployeeServlet extends HttpServlet {
+
+
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+
+            throws ServletException, IOException {
+
+
+
+        resp.setContentType("application/json");
+
+
+
+        System.out.println("GetEmployees API Hit");
+
+
+
+        EmployeeDAO dao = new EmployeeDAO();
+
+        List<Employee> list = dao.getEmployees();
+
+
+
+        Gson gson = new Gson();
+
+        String json = gson.toJson(list);
+
+
+
+        PrintWriter out = resp.getWriter();
+
+        out.print(json);
+
+    }
+
+}
+
