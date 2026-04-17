@@ -1,0 +1,88 @@
+package ebook581;
+
+
+
+import java.io.*;
+
+import javax.servlet.*;
+
+import javax.servlet.annotation.WebServlet;
+
+import javax.servlet.http.*;
+
+
+
+@WebServlet("/addEmployee")
+
+public class AddEmployeeServlet extends HttpServlet {
+
+
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+
+            throws ServletException, IOException {
+
+
+
+        resp.setContentType("text/plain");
+
+        PrintWriter out = resp.getWriter();
+
+
+
+        try {
+
+            System.out.println("AddEmployee API Hit");
+
+
+
+            int id = Integer.parseInt(req.getParameter("empid"));
+
+            String name = req.getParameter("name");
+
+            int salary = Integer.parseInt(req.getParameter("salary"));
+
+            String dept = req.getParameter("department");
+
+
+
+            Employee emp = new Employee(id, name, salary, dept);
+
+
+
+            EmployeeDAO dao = new EmployeeDAO();
+
+            boolean result = dao.addEmployee(emp);
+
+
+
+            if (result) {
+
+                out.println("Employee Inserted Successfully");
+
+            } else {
+
+                out.println("Insertion Failed");
+
+            }
+
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            out.println("Error: " + e.getMessage());
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
